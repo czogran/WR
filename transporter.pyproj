@@ -21,12 +21,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="black_cross.py" />
     <Compile Include="color_calibration.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="come_back.py" />
     <Compile Include="for_brick.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lf.py" />
     <Compile Include="transporter.py" />
     <Compile Include="turn_red.py">
       <SubType>Code</SubType>
