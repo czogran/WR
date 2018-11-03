@@ -29,6 +29,9 @@
     <Compile Include="for_brick.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="funkcje.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lf.py" />
     <Compile Include="transporter.py" />
     <Compile Include="turn_red.py">

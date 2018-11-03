@@ -32,7 +32,6 @@ diff=40
 
 
 lcd.clear()
-
 while not touch_sensor.is_pressed:
     black_left = light_left.reflected_light_intensity
     black_right = light_right.reflected_light_intensity
@@ -51,7 +50,7 @@ lcd.update()
 while touch_sensor.is_pressed:
     continue
 lcd.clear()
-lcd.draw.text((48,13),"wcisnij przycisk aby wystartowac")
+#lcd.draw.text((48,13),"wcisnij przycisk aby wystartowac")
 lcd.update()
 #wcczytanie czerwonego
 while not touch_sensor.is_pressed:
@@ -73,6 +72,8 @@ while not touch_sensor.is_pressed:
 while touch_sensor.is_pressed:
     continue
 lcd.clear()
+#lcd.draw.text((48,13),"wcisnij przycisk aby wystartowac")
+lcd.update()
 lcd.draw.text((48,13),"wcisnij przycisk aby zakonczyc dzialanie programu")
 lcd.update()
 
@@ -103,12 +104,12 @@ while not touch_sensor.is_pressed:
 
     poprzedni_blad = blad
     sleep(0.1)
-    red_left=light_left.red
-    red_right=light_right.red
-    blue_left=light_left.blue
-    blue_right=light_right.blue
-    green_left=light_left.green
-    green_right=light_right.green
+    red_left_travel=light_left.red
+    red_right_travel=light_right.red
+    blue_left_travel=light_left.blue
+    blue_right_travel=light_right.blue
+    green_left_travel=light_left.green
+    green_right_travel=light_right.green
     #wykrywanie czy najechal na czerwona
     if (red_left_travel<red_left+diff and red_left_travel>(red_left-diff)):
        if( green_left_travel< green_left-diff and green_left_travel> green_left-diff):
