@@ -1,4 +1,6 @@
 
+
+
 #pobiez czarne
 def black():
     global black_left
@@ -118,17 +120,17 @@ def drive_to_red(diff):
 
 
 #sztywny obrot przy czerwonej
-def red_trun(time_forward,time_turn):
+def red_trun(angle_forward,angle_turn):
     if (red_left_travel<red_left+diff and red_left_travel>(red_left-diff)):
        if( green_left_travel< green_left-diff and green_left_travel> green_left-diff):
            if(blue_left_travel< blue_left+diff and blue_left_travel> blue_left-diff):
                #pierwszy fragment-podjazd do przodu
-               right_engine.run_timed(time_sp=time_forward, speed_sp=-200)
-               left_engine.run_timed(time_sp=time_forward, speed_sp=-200)
+               right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
 
                #obrot przez pierwszy fragment czarnej
-               right_engine.run_timed(time_sp=time_turn,speed_sp = -100, stop_action = "coast")
-               left_engine.run_timed(timed_sp=time_turn,speed_sp=100,stop_action="coast")
+               right_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
                #obrac sie az naptka czarna
                while True:
                    right_engine.run_forever(speed_sp = -100, stop_action = "coast")
@@ -144,12 +146,12 @@ def red_trun(time_forward,time_turn):
            if( green_right_travel< green_right-diff and green_right_travel> green_right-diff):
                if(blue_right_travel< blue_right+diff and blue_right_travel> blue_right-diff):
                    #pierwszy fragment-podjazd do przodu
-                   right_engine.run_timed(time_sp=time_forward, speed_sp=-200)
-                   left_engine.run_timed(time_sp=time_forward, speed_sp=-200)
+                   right_engine.run_to_rel_pos(position_sp=angle_forward, speed_sp=300, stop_action="coast")
+                   left_engine.run_to_rel_pos(position_sp=angle_forward, speed_sp=300, stop_action="coast")
 
                    #obrot przez pierwszy fragment czarnej
-                   right_engine.run_timed(time_sp=time_turn,speed_sp = 100, stop_action = "coast")
-                   left_engine.run_timed(timed_sp=time_turn,speed_sp=-100,stop_action="coast")
+                   right_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
+                   left_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
                    #obrac sie az naptka czarna
                    while True:
                         right_engine.run_forever(speed_sp = 100, stop_action = "coast")
@@ -162,7 +164,7 @@ def red_trun(time_forward,time_turn):
                             break
 
 #jazda do klocka
-def to_brick(time_to_brick,time_medium):
+def to_brick(angle_big,angle_medium):
     global touch_sensor
     global black_left
     global blad_right
@@ -197,21 +199,22 @@ def to_brick(time_to_brick,time_medium):
             break
  
     #podnsiesienie klocka, nie wiem w ktora strone jaki kierunek ma silnik medium
-    medium.run_timed(time_sp=time_medium, speed_sp=-200)
-    right_engine.run_timed(time_sp=time_to_brick, speed_sp=-200)
-    left_engine.run_timed(time_sp=time_to_brick, speed_sp=-200)
-    medium.run_timed(time_sp=time_medium, speed_sp=200, stop_action = "break")
+    medium.run_to_rel_pos(position_sp=angle_medium, speed_sp=300, stop_action="coast")
+    right_engine.run_to_rel_pos(position_sp=-angle_big, speed_sp=300, stop_action="coast")
+    left_engine.run_to_rel_pos(position_sp=-angle_big, speed_sp=300, stop_action="coast")
+    medium.run_to_rel_pos(position_sp=-angle_medium, speed_sp=300, stop_action="coast")
 
 
 
 #powrot na czarna
-def come_back_to_black(time_back,time_turn):
-    right_engine.run_timed(time_sp=time_back,speed_sp = 200, stop_action = "coast")
-    left_engine.run_timed(time_sp=time_back, speed_sp = 200, stop_action = "coast")
-
+def come_back_to_black(angle_back,angle_turn):
+    #right_engine.run_timed(time_sp=time_back,speed_sp = 200, stop_action = "coast")
+    # left_engine.run_timed(time_sp=time_back, speed_sp = 200, stop_action = "coast")
+    right_engine.run_to_rel_pos(position_sp=angle_back, speed_sp=300, stop_action="coast")
+    left_engine.run_to_rel_pos(position_sp=angle_back, speed_sp=300, stop_action="coast")
     #fragment poczatkowego obracnia sie wokol lini czarnej
-    right_engine.run_timed(time_sp=time_turn,speed_sp = 200, stop_action = "coast")
-    left_engine.run_timed(time_sp=time_turn, speed_sp = -200, stop_action = "coast")
+    right_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
+    left_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
 
     #obraca sie wokol wlasnej osi az napotka czarna linie
     while True:
@@ -226,7 +229,7 @@ def come_back_to_black(time_back,time_turn):
 
 
 #powrot do skrzyzowania z czarna, potem obrot
-def to_brick(time_forward):
+def to_brick(angle_forward):
     global touch_sensor
     global black_left
     global blad_right
@@ -258,8 +261,8 @@ def to_brick(time_forward):
              left_engine.stop(stop_action="coast")
              right_engine.stop(stop_action="coast") 
              #sztywny podjazd
-             right_engine.run_timed(time_sp=time_forward, speed_sp=-200)
-             left_engine.run_timed(time_sp=time_forward, speed_sp=-200)
+             right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+             left_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
              #obrac sie az naptka czarna
              while True:
                 right_engine.run_forever(speed_sp = -100, stop_action = "coast")
