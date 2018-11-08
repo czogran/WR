@@ -116,15 +116,13 @@ def red_trun(angle_forward,angle_turn,sleep_time):
                left_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
                sleep(sleep_time)
                #obrac sie az naptka czarna
-               while True:
-                   right_engine.run_forever(speed_sp = -100, stop_action = "coast")
-                   left_engine.run_forever(speed_sp=100,stop_action="coast")
-                   sleep(0.1)
-                   #obraca sie az napotka czarna linie
-                   if light_right.reflected_light_intesity>100:
-                       left_engine.stop(stop_action="coast")
-                       right_engine.stop(stop_action="coast")
-                       break
+               
+               right_engine.run_forever(speed_sp = -100, stop_action = "coast")
+               left_engine.run_forever(speed_sp=100,stop_action="coast")
+               while  light_right.reflected_light_intesity>50:
+                   continue
+               left_engine.stop(stop_action="coast")
+               right_engine.stop(stop_action="coast")
 
     if (red_right_travel<red_right+diff and red_right_travel>(red_right-diff)):
            if( green_right_travel< green_right-diff and green_right_travel> green_right-diff):
@@ -138,15 +136,15 @@ def red_trun(angle_forward,angle_turn,sleep_time):
                    left_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
                    sleep(sleep_time)
                    #obrac sie az naptka czarna
-                   while True:
-                        right_engine.run_forever(speed_sp = 100, stop_action = "coast")
-                        left_engine.run_forever(speed_sp=-100,stop_action="coast")
-                        sleep(0.1)
-                        #obraca sie az napotka czarna linie
-                        if light_right.reflected_light_intesity>100:
-                            left_engine.stop(stop_action="coast")
-                            right_engine.stop(stop_action="coast")
-                            break
+                   right_engine.run_forever(speed_sp = 100, stop_action = "coast")
+                   left_engine.run_forever(speed_sp=-100,stop_action="coast")
+                   while  light_right.reflected_light_intesity>50:
+                     continue
+                   left_engine.stop(stop_action="coast")
+                   right_engine.stop(stop_action="coast")
+                  
+                   
+                  
 
 #jazda do klocka
 def to_brick(angle_big,angle_medium):

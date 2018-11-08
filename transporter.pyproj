@@ -33,6 +33,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lf.py" />
+    <Compile Include="rafal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="skewencyjne.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="transporter.py" />
     <Compile Include="turn_red.py">
       <SubType>Code</SubType>
