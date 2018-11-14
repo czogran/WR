@@ -99,6 +99,8 @@ Kd=1
 srodek_l = (white_left + black_left) // 2
 srodek_r = (white_right + black_right) // 2
 
+Sound.speak('Welcome to the E V 3 dev project!').wait()
+
 #follow line do niebieskiego
 while not touch_sensor.is_pressed:
         print("to blue")
@@ -163,7 +165,7 @@ if (light_left.red<blue_red_left+diff and light_left.red>(blue_red_left-diff)):
                right_engine.stop(stop_action="coast")
             
 
-if (light_right.red<blue_red_left+diff and light_right.red>(blue_red_left-diff)):
+elif (light_right.red<blue_red_left+diff and light_right.red>(blue_red_left-diff)):
       if(light_right.green< blue_green_left-diff and light_right.green> blue_green_left-diff):
          if(light_right.blue< blue_blue_left+diff and light_right.blue> blue_blue_left-diff):
                right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
@@ -244,8 +246,10 @@ medium.stop(stop_action="coast")
 
 #obrócony
 
-#powrot na czarna
 
+print("to black again")
+
+#powrot na czarna
 
 while not touch_sensor.is_pressed:
         print("to blue")
@@ -261,6 +265,7 @@ while not touch_sensor.is_pressed:
         poprzedni_blad = blad
         sleep(0.1)
         if light_left.reflected_light_intensity<40 and light_right.reflected_light_intensity<40:
+            print("black detected")
             left_engine.stop(stop_action="coast")
             right_engine.stop(stop_action="coast")
             break
@@ -282,6 +287,7 @@ while light_right.reflected_light_intesity>100:
 left_engine.stop(stop_action="coast")
 right_engine.stop(stop_action="coast") 
                     
+print("follow line to red")
 
 #follow line do czerwonego
 while not touch_sensor.is_pressed:
@@ -337,7 +343,7 @@ if (light_left.red<red_left+diff and light_left.red>(red_left-diff)):
 
              
 
-if (light_right.red<red_left+diff and light_right.red>(red_left-diff)):
+elif (light_right.red<red_left+diff and light_right.red>(red_left-diff)):
           if(light_right.green< green_left-diff and light_right.green> green_left-diff):
             if(light_right.blue< blue_left+diff and light_right.blue> blue_left-diff):
                right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
@@ -363,7 +369,7 @@ if (light_right.red<red_left+diff and light_right.red>(red_left-diff)):
 diff=30
 
 while not touch_sensor.is_pressed:
-        print("to blue")
+        print("to red, put brick")
         blad_l = light_left.reflected_light_intensity - srodek_l
         blad_r = light_right.reflected_light_intensity - srodek_r
         blad = blad_l - blad_r
