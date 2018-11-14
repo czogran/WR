@@ -9,7 +9,7 @@ lcd = Screen()
 
 right_engine = LargeMotor('outB')
 left_engine = LargeMotor('outA')
-madium=MediumMotor('outC')
+medium=MediumMotor('outC')
 
 white_left = 299
 white_right = 235
@@ -124,7 +124,7 @@ while not touch_sensor.is_pressed:
         blue_right_travel=light_right.blue
         green_left_travel=light_left.green
         green_right_travel=light_right.green
-        #wykrywanie czy najechal na czerwona
+        #wykrywanie czy najechal na niebieska
         if (red_left_travel<blue_red_left+diff and red_left_travel>(blue_red_left-diff)):
            if( green_left_travel< blue_green_left-diff and green_left_travel> blue_green_left-diff):
                if(blue_left_travel< blue_blue_left+diff and blue_left_travel> blue_blue_left-diff):
@@ -250,4 +250,165 @@ left_engine.stop(stop_action="coast")
 right_engine.stop(stop_action="coast")
 medium.stop(stop_action="coast")
 
+#obrócony
 
+#powrot na czarna
+
+
+while not touch_sensor.is_pressed:
+        print("to blue")
+        blad_l = light_left.reflected_light_intensity - srodek_l
+        blad_r = light_right.reflected_light_intensity - srodek_r
+        blad = blad_l - blad_r
+        blad_prop = Kp * float(blad)
+        blad_deri = Kd * (blad - poprzedni_blad)
+       
+        left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+
+        poprzedni_blad = blad
+        sleep(0.1)
+        if light_left.reflected_light_intensity<40 and light_right.reflected_light_intensity<40:
+            left_engine.stop(stop_action="coast")
+            right_engine.stop(stop_action="coast")
+            break
+
+
+#obrot na czarnej
+angle_forward=100
+
+right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+left_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+sleep(sleep_time)
+#obrac sie az naptka czarna
+while light_right.reflected_light_intesity>100:
+                right_engine.run_forever(speed_sp = -100, stop_action = "coast")
+                left_engine.run_forever(speed_sp=100,stop_action="coast")
+                sleep(0.1)
+                
+
+left_engine.stop(stop_action="coast")
+right_engine.stop(stop_action="coast") 
+                    
+
+#follow line do czerwonego
+while not touch_sensor.is_pressed:
+        print("to blue")
+        blad_l = light_left.reflected_light_intensity - srodek_l
+        blad_r = light_right.reflected_light_intensity - srodek_r
+        blad = blad_l - blad_r
+        blad_prop = Kp * float(blad)
+        blad_deri = Kd * (blad - poprzedni_blad)
+       
+        left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+
+        poprzedni_blad = blad
+        sleep(0.1)
+        red_left_travel=light_left.red
+        red_right_travel=light_right.red
+        blue_left_travel=light_left.blue
+        blue_right_travel=light_right.blue
+        green_left_travel=light_left.green
+        green_right_travel=light_right.green
+        #wykrywanie czy najechal na czerwona
+        if (red_left_travel<red_left+diff and red_left_travel>(red_left-diff)):
+           if( green_left_travel< blue_green_left-diff and green_left_travel> green_left-diff):
+               if(blue_left_travel< blue_left+diff and left_travel> blue_left-diff):
+                   left_engine.stop(stop_action="coast")
+                   right_engine.stop(stop_action="coast")
+                   break
+        if (red_right_travel<red_right+diff and red_right_travel>(red_right-diff)):
+           if( green_right_travel< green_right-diff and green_right_travel> green_right-diff):
+               if(blue_right_travel< blue_right+diff and blue_right_travel> blue_right-diff):
+                   left_engine.stop(stop_action="coast")
+                   right_engine.stop(stop_action="coast")
+                   break
+
+
+if (red_left_travel<red_left+diff and red_left_travel>(red_left-diff)):
+      if( green_left_travel< green_left-diff and green_left_travel> green_left-diff):
+         if(blue_left_travel< blue_left+diff and left_travel> blue_left-diff):
+               right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+               print("przed")
+
+               #obrot przez pierwszy fragment czarnej
+               right_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
+               sleep(sleep_time)
+
+               right_engine.run_forever(speed_sp=100,stop_action="coast")
+               left_engine.run_forever(speed_sp=-100,stop_action="coast")
+               print("po")
+               while light_left.reflected_light_intensity >50:
+                 contiue
+               print("stop")
+               left_engine.stop(stop_action="coast")
+               right_engine.stop(stop_action="coast")
+
+             
+
+if (red_right_travel<red_right+diff and red_right_travel>(red_right-diff)):
+      if( green_right_travel< green_right-diff and green_right_travel> green_right-diff):
+         if(blue_right_travel< blue_right+diff and right_travel> blue_right-diff):
+               right_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=-angle_forward, speed_sp=300, stop_action="coast")
+               print("przed")
+
+               #obrot przez pierwszy fragment czarnej
+               right_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
+               left_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
+               sleep(sleep_time)
+
+               right_engine.run_forever(speed_sp=-100,stop_action="coast")
+               left_engine.run_forever(speed_sp=100,stop_action="coast")
+               print("po")
+               while light_right.reflected_light_intensity >50:
+                 continue
+
+               print("stop")
+               left_engine.stop(stop_action="coast")
+               right_engine.stop(stop_action="coast")
+
+#jazda do czerwonego
+diff=20
+
+while not touch_sensor.is_pressed:
+        print("to blue")
+        blad_l = light_left.reflected_light_intensity - srodek_l
+        blad_r = light_right.reflected_light_intensity - srodek_r
+        blad = blad_l - blad_r
+        blad_prop = Kp * float(blad)
+        blad_deri = Kd * (blad - poprzedni_blad)
+       
+        left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+
+        poprzedni_blad = blad
+        sleep(0.1)
+        red_left_travel=light_left.red
+        red_right_travel=light_right.red
+        blue_left_travel=light_left.blue
+        blue_right_travel=light_right.blue
+        green_left_travel=light_left.green
+        green_right_travel=light_right.green
+        #wykrywanie czy najechal na czerwona
+        if (red_left_travel<red_left+diff and red_left_travel>(red_left-diff)):
+           if( green_left_travel< blue_green_left-diff and green_left_travel> green_left-diff):
+               if(blue_left_travel< blue_left+diff and left_travel> blue_left-diff):
+                      if (red_right_travel<red_right+diff and red_right_travel>(red_right-diff)):
+                         if( green_right_travel< green_right-diff and green_right_travel> green_right-diff):
+                                if(blue_right_travel< blue_right+diff and blue_right_travel> blue_right-diff):
+                                   left_engine.stop(stop_action="coast")
+                                   right_engine.stop(stop_action="coast")
+                                   break
+
+
+sleep(1)
+medium.run_to_rel_pos(position_sp=angle_medium,speed_sp=300,stop_action="hold")
+
+sleep(1)
+right_engine.run_to_rel_pos(position_sp=angle_back, speed=300,stop_action="coast")
+left_engine.run_to_rel_pos(position_sp=angle_back,speed=300,stop_action="coast")
+sleep(1)
