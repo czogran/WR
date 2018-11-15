@@ -116,18 +116,23 @@ while not touch_sensor.is_pressed:
         poprzedni_blad = blad
         sleep(0.1)
        
-
+        r=light_left.red
+       
         #wykrywanie czy najechal na niebieska
-        if (light_left.red<blue_red_left+diff and light_left.red>(blue_red_left-diff)):
-          if(light_left.green< blue_green_left-diff and light_left.green> blue_green_left-diff):
-             if(light_left.blue< blue_blue_left+diff and light_left.blue> blue_blue_left-diff):
+        if (r<blue_red_left+diff and r>(blue_red_left-diff)):
+            g=light_left.green
+            if(g< blue_green_left-diff and g> blue_green_left-diff):
+             b=light_left.blue
+             if(b< blue_blue_left+diff and b> blue_blue_left-diff):
                    left_engine.stop(stop_action="coast")
                    right_engine.stop(stop_action="coast")
                    break
-
-        if (light_right.red<blue_red_left+diff and light_right.red>(blue_red_left-diff)):
-          if(light_right.green< blue_green_left-diff and light_right.green> blue_green_left-diff):
-            if(light_right.blue< blue_blue_left+diff and light_right.blue> blue_blue_left-diff):
+        r=light_left.red
+        if (r<blue_red_left+diff and r>(blue_red_left-diff)):
+          g=light_right.green
+          if(g< blue_green_left-diff and g> blue_green_left-diff):
+            b=light_right.blue
+            if(b< blue_blue_left+diff and b> blue_blue_left-diff):
                    left_engine.stop(stop_action="coast")
                    right_engine.stop(stop_action="coast")
                    break
