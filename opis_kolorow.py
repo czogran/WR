@@ -88,8 +88,6 @@ while not touch_sensor.is_pressed:
         blad = blad_l - blad_r
         blad_prop = Kp * float(blad)
         blad_deri = Kd * (blad - poprzedni_blad)       
-        left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
-        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
         poprzedni_blad = blad
         sleep(0.1)
         if(l<50 and blad<20) :    

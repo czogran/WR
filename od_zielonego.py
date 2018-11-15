@@ -27,7 +27,7 @@ blue_red_left=30
 blue_red_right=30
 lcd.clear()
 #czarne
-while not touch_sensor.is_pressed:
+#while not touch_sensor.is_pressed:
  #       black_left = light_left.reflected_light_intensity
  #       black_right = light_right.reflected_light_intensity
 #pint("black left:"+str(black_left)+"\n"+"black right:"+str(black_right))
@@ -36,7 +36,7 @@ while not touch_sensor.is_pressed:
 #while touch_sensor.is_pressed:
 #continue
 #biale
-lcd.clear()
+#lcd.clear()
 #while not touch_sensor.is_pressed:
 #  white_left = light_left.reflected_light_intensity
 #  white_right = light_right.reflected_light_intensity
