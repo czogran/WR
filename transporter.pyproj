@@ -33,6 +33,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lf.py" />
+    <Compile Include="od_zielonego.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="opis_kolorow.py">
       <SubType>Code</SubType>
     </Compile>

@@ -92,7 +92,9 @@ while not touch_sensor.is_pressed:
         right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
         poprzedni_blad = blad
         sleep(0.1)
-        if(l<50 and blad<20) :      
+        if(l<50 and blad<20) :    
+           left_engine.stop(stop_action="coast")
+           right_engine.stop(stop_action="coast")
            if(light_left.red>value):
                print("red")
                Sound.speak('red').wait()
@@ -108,8 +110,11 @@ while not touch_sensor.is_pressed:
            else:
                print("czarny")
            sleep(2)
-        
-        elif(r<50 and blad<20) :      
+           left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+           right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+        elif(r<50 and blad<20) :  
+           left_engine.stop(stop_action="coast")
+           right_engine.stop(stop_action="coast") 
            if(light_right.red>value):
                print("red")
                Sound.speak('red').wait()
@@ -125,5 +130,9 @@ while not touch_sensor.is_pressed:
            else:
                print("czarny")
         sleep(2)
+        left_engine.run_forever(speed_sp =-predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+left_engine.stop(stop_action="coast")
+right_engine.stop(stop_action="coast")
           
       
