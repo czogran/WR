@@ -79,6 +79,7 @@ Kp=5
 Kd=1
 srodek_l = (white_left + black_left) // 2
 srodek_r = (white_right + black_right) // 2
+licznik=0
 #follow line do niebieskiego
 while not touch_sensor.is_pressed:
         l=light_left.reflected_light_intensity
@@ -90,7 +91,8 @@ while not touch_sensor.is_pressed:
         blad_deri = Kd * (blad - poprzedni_blad)       
         poprzedni_blad = blad
         sleep(0.1)
-        if(l<50 and blad<20) :    
+        if(l<50 and blad<20 and licznik<2) :  
+           licznik=licznik+1
            left_engine.stop(stop_action="coast")
            right_engine.stop(stop_action="coast")
            if(light_left.red>value):
@@ -110,7 +112,8 @@ while not touch_sensor.is_pressed:
            sleep(2)
            left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
            right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
-        elif(r<50 and blad<20) :  
+        elif(r<50 and blad<20 and licznik<2) : 
+           licznik=licznik+1
            left_engine.stop(stop_action="coast")
            right_engine.stop(stop_action="coast") 
            if(light_right.red>value):
@@ -127,9 +130,13 @@ while not touch_sensor.is_pressed:
                Sound.speak('yellow').wait()
            else:
                print("czarny")
-        sleep(2)
-        left_engine.run_forever(speed_sp =-predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
-        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+           sleep(2)
+           left_engine.run_forever(speed_sp =-predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+           right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+        if licznik<8:
+            licznik=licznik+1
+        else:
+            licznik=0
 left_engine.stop(stop_action="coast")
 right_engine.stop(stop_action="coast")
           

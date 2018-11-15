@@ -79,6 +79,7 @@ Kp=5
 Kd=1
 srodek_l = (white_left + black_left) // 2
 srodek_r = (white_right + black_right) // 2
+
 #follow line do niebieskiego
 while not touch_sensor.is_pressed:
         l=light_left.reflected_light_intensity
@@ -92,6 +93,7 @@ while not touch_sensor.is_pressed:
         right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
         poprzedni_blad = blad
         sleep(0.1)
+        
 left_engine.stop(stop_action="coast")
 right_engine.stop(stop_action="coast")
           
