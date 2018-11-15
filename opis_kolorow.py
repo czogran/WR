@@ -98,7 +98,7 @@ while not touch_sensor.is_pressed:
            if(light_left.red>value):
                print("red")
                Sound.speak('red').wait()
-           elif(ligh_left.blue>value):
+           elif(light_left.blue>value):
                print("blue")
                Sound.speak('blue').wait()
            elif(light_left.green>value):
@@ -118,7 +118,7 @@ while not touch_sensor.is_pressed:
            if(light_right.red>value):
                print("red")
                Sound.speak('red').wait()
-           elif(ligh_right.blue>value):
+           elif(light_right.blue>value):
                print("blue")
                Sound.speak('blue').wait()
            elif(light_right.green>value):
