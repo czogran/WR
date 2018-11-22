@@ -9,8 +9,8 @@ left_engine = LargeMotor('outA')
 medium=MediumMotor('outC')
 white_left =77
 white_right = 77
-black_left = 15
-black_right = 15
+black_left = 7
+black_right = 7
 #kolory na czerwonym
 green_left=19
 green_right=17
@@ -80,8 +80,68 @@ Kd=1
 srodek_l = (white_left + black_left) // 2
 srodek_r = (white_right + black_right) // 2
 licznik=0
+angle_turn=100
+def turn():
+     right_engine.run_forever(speed_sp = -100, stop_action = "coast")
+     left_engine.run_forever(speed_sp=100,stop_action="coast")
+     #obrot przez pierwszy fragment czarnej
+     right_engine.run_to_rel_pos(position_sp=-angle_turn, speed_sp=300, stop_action="coast")
+     left_engine.run_to_rel_pos(position_sp=angle_turn, speed_sp=300, stop_action="coast")
+     sleep(sleep_time)
+     right_engine.run_forever(speed_sp = -100, stop_action = "coast")
+     left_engine.run_forever(speed_sp=100,stop_action="coast")
+     while  light_right.reflected_light_intesity>50:
+          continue
+     left_engine.stop(stop_action="coast")
+     right_engine.stop(stop_action="coast")
+def turn369():
+    turn()
+    turn()
 #follow line do niebieskiego
-while not touch_sensor.is_pressed:
+up_light=200
+down_light=100
+def blue():
+    r=light_left.red
+    b=light_left.blue
+    if(b>up_light and  r<down_light):
+         return True
+    r=light_right.red
+    b=light_right.blue
+    if(b>up_light and  r<down_light):
+        return True
+    return False     
+def red():
+    r=light_left.red
+    g=light_left.green
+    if(up_light>200 and  down_light<100):
+         return True
+    r=light_right.red
+    g=light_right.green
+    if(r>200 and  g<100):
+        return True
+    return False  
+def green():
+    r=light_left.red
+    g=light_left.green
+    if(g>200 and  r<100):
+         return True
+    r=light_right.red
+    g=light_right.green
+    if(g>200 and  r<100):
+        return True
+    return False  
+def yellow():
+    y=light_left.yellow
+    g=light_left.green
+    if(y>200 and  g<100):
+         return True
+    y=light_right.yellow
+    g=light_right.green
+    if(y>200 and  g<100):
+        return True
+    return False  
+def run(warunek):
+    while not touch_sensor.is_pressed:
         l=light_left.reflected_light_intensity
         r= light_right.reflected_light_intensity
         blad_l =  l- srodek_l
@@ -91,53 +151,13 @@ while not touch_sensor.is_pressed:
         blad_deri = Kd * (blad - poprzedni_blad)       
         poprzedni_blad = blad
         sleep(0.1)
-        if(l<50 and blad<20 and licznik<2) :  
-           licznik=licznik+1
-           left_engine.stop(stop_action="coast")
-           right_engine.stop(stop_action="coast")
-           if(light_left.red>value):
-               print("red")
-               Sound.speak('red').wait()
-           elif(light_left.blue>value):
-               print("blue")
-               Sound.speak('blue').wait()
-           elif(light_left.green>value):
-               print("green")
-               Sound.speak('green').wait()
-           elif (light_left.yellow>value):
-               print("zolty")
-               Sound.speak('yellow').wait()
-           else:
-               print("czarny")
-           sleep(2)
-           left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
-           right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
-        elif(r<50 and blad<20 and licznik<2) : 
-           licznik=licznik+1
-           left_engine.stop(stop_action="coast")
-           right_engine.stop(stop_action="coast") 
-           if(light_right.red>value):
-               print("red")
-               Sound.speak('red').wait()
-           elif(light_right.blue>value):
-               print("blue")
-               Sound.speak('blue').wait()
-           elif(light_right.green>value):
-               print("green")
-               Sound.speak('green').wait()
-           elif (light_right.yellow>value):
-               print("zolty")
-               Sound.speak('yellow').wait()
-           else:
-               print("czarny")
-           sleep(2)
-           left_engine.run_forever(speed_sp =-predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
-           right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
-        if licznik<8:
-            licznik=licznik+1
-        else:
-            licznik=0
-left_engine.stop(stop_action="coast")
-right_engine.stop(stop_action="coast")
-          
+
+    left_engine.stop(stop_action="coast")
+    right_engine.stop(stop_action="coast")
+
+run(red)
+run(blue)
+run(green)
+run(yellow)
+         
       

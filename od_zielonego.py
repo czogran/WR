@@ -80,6 +80,20 @@ Kd=1
 srodek_l = (white_left + black_left) // 2
 srodek_r = (white_right + black_right) // 2
 
+#wyjazd z zielonego
+while not touch_sensor.is_pressed:
+        left_engine.run_forever(speed_sp = -predkosc_bazowa - blad_prop + blad_deri, stop_action = "coast")
+        right_engine.run_forever(speed_sp = -predkosc_bazowa + blad_prop - blad_deri, stop_action = "coast")
+        l=light_left.reflected_light_intensity
+        r= light_right.reflected_light_intensity
+        if(l>50):
+             break
+        if(r>50):
+            break
+        sleep(0.1)
+left_engine.stop(stop_action="coast")
+right_engine.stop(stop_action="coast")
+
 #follow line do niebieskiego
 while not touch_sensor.is_pressed:
         l=light_left.reflected_light_intensity
